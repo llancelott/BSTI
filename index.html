@@ -429,6 +429,7 @@ hr.twee-char-hr {
   color: #7b4b21;
 }
 @media (max-width: 800px) {
+  /* 保證外層 passage 清除左右padding/margin */
   tw-story, tw-passage, #passages, .passage {
     padding: 0 !important;
     margin: 0 !important;
@@ -436,17 +437,17 @@ hr.twee-char-hr {
     max-width: 100vw !important;
     box-sizing: border-box !important;
   }
+  /* 讓米白框（qbox）手機版直接「左右留你要的距離」 */
   .qbox {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    border-radius: 16px;
-    box-shadow: 0 2px 12px 0 #dac7b380;
-    padding: 1.2em 16px !important;  /* 左右距離這裡自訂：16px或8px或20px均可 */
-    box-sizing: border-box;
-    background: #f8f5ec;
-    border: 2.5px solid #dac7b3;
+    width: calc(100vw - 32px) !important;      /* 左右各留16px，這是關鍵！ */
+    max-width: calc(100vw - 32px) !important;
+    margin: 0 auto !important;                 /* 置中 */
+    padding: 1.2em 1em !important;             /* 內文字與米白框的距離，可調整 */
+    border-radius: 16px !important;
+    box-shadow: 0 2px 12px 0 #dac7b380 !important;
+    box-sizing: border-box !important;
+    background: #f8f5ec !important;
+    border: 2.5px solid #dac7b3 !important;
   }
 }
 
