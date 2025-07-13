@@ -417,28 +417,49 @@ hr.twee-char-hr {
 }
 
 @media (max-width: 800px) {
-  /* 歸零外層所有padding/margin，防止奇怪偏移 */
   html, body, #story, #passages, .passage {
     margin: 0 !important;
     padding: 0 !important;
-    box-sizing: border-box !important;
     max-width: 100vw !important;
     min-width: 0 !important;
+    box-sizing: border-box !important;
     overflow-x: hidden !important;
     background: none !important;
   }
 
-  /* 你自己的內容框，左右貼邊距 3vw，且對稱 */
+  /* 主要內容區塊統一左右 2vw 等距貼邊（如要全貼，改成 0）*/
   .qbox, .storybox, .twee-character, .titlebox, h1, h2 {
-    margin: 0 auto !important;
-    padding-left: 3vw !important;
-    padding-right: 3vw !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
     box-sizing: border-box !important;
     width: 100% !important;
     max-width: 100vw !important;
     min-width: 0 !important;
     left: 0 !important;
     right: 0 !important;
+    float: none !important;
+    clear: both !important;
+  }
+
+  /* 內容區塊不讓左右距離失衡，內容始終對中 */
+  .qbox, .storybox, .twee-character {
+    margin-top: 2vw !important;
+    margin-bottom: 2vw !important;
+  }
+
+  /* 強制所有內容圖片/表格/iframe 也不要超出寬度 */
+  .qbox img, .storybox img, .twee-character img,
+  .qbox table, .storybox table, .twee-character table,
+  .qbox iframe, .storybox iframe, .twee-character iframe {
+    max-width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    display: block !important;
   }
 }
 </style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="1" tags="" position="450,100" size="100,100">&lt;div class=&quot;qbox&quot;&gt;
@@ -1956,7 +1977,7 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
     Kaufman, S. B., et al. (2019). The Light vs. Dark Triad of Personality. &lt;i&gt;Frontiers in Psychology&lt;/i&gt;.
   &lt;/div&gt;
 &lt;/div&gt;
-
+&lt;div class=&quot;qbox&quot; style=&quot;border:1px solid red;&quot;&gt;123&lt;/div&gt;
 &lt;&lt;set $I = 0&gt;&gt;
 &lt;&lt;set $E = 0&gt;&gt;
 &lt;&lt;set $A = 0&gt;&gt;
