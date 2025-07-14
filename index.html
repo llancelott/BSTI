@@ -324,31 +324,35 @@ button.gpt-main:hover {
 
 .twee-char-mainrow {
   display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  margin: 10px 0 6px 0;
+  flex-direction: column; /* 垂直排列 */
+  align-items: center;    /* 水平置中 */
+  gap: 0em;             /* 圖片與文字間距 */
+  margin: 1px 0 1px 0;  /* 上下間距 */
 }
+
 .twee-char-portrait {
-  width: 230px;
-  max-width: 33vw;
+  width: 360px;           /* 放大寬度，可調整 */
+  max-width: 90vw;        /* 響應式 */
   height: auto;
   border-radius: 13px;
   box-shadow: 0 3px 14px #dac7b320;
-  flex-shrink: 0;
   background: #f3ede1;
   border: 2.5px solid #dac7b380;
 }
+
 .twee-char-quotes {
-  flex:1 1 0%;
+  width: 360px;           /* 與圖片寬度統一 */
+  max-width: 90vw;
+  color: #876146;
+  font-size: 1.1em;
+  line-height: 1.3;
+  font-family: 'Noto Sans TC', '微軟正黑體', Arial, sans-serif;
+  text-align: center;     /* 文字置中 */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  color: #876146;
-  font-size: 1.09em;
-  line-height: 1.74;
-  padding-top: 6px;
-  font-family: 'Noto Sans TC','微軟正黑體',Arial,sans-serif;
+  gap: 0.3em;
 }
+
 .twee-char-quotes span {
   display: block;
   margin-bottom: 3px;
@@ -490,8 +494,7 @@ input.macro-textbox:focus {
   background: #fffaea !important;
 }
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">window.State = SugarCube.State;
-window.Engine = SugarCube.Engine;
-</script><tw-passagedata pid="1" name="1" tags="" position="300,200" size="100,100">&lt;div class=&quot;qbox&quot;&gt;
+window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags="" position="300,200" size="100,100">&lt;div class=&quot;qbox&quot;&gt;
   &lt;div class=&quot;qbox-question&quot;&gt;
     1. 大年三十中午，你忙了一整天：殺魚、備菜、擺盤，還特地在群組提醒哥哥和姐姐「五點前到家」。傍晚卻收到訊息：哥哥說臨時要加班、姐姐說塞車回不來。媽媽坐在餐桌邊，嘴角勉強上揚：「大家都長大了，難免各有安排。」她卻靜靜擦著桌子，眼神裡有點失落。你望著滿桌菜，氣氛有點尷尬又壓抑，你選擇:
   &lt;/div&gt;
@@ -864,47 +867,155 @@ window.Engine = SugarCube.Engine;
     &lt;span class=&quot;qbox-option&quot;&gt;&lt;&lt;link &quot;你直視鏡子時，腦海全是「我是不是什麼都比不上別人」，甚至連自己的外表都看不起。&quot;&gt;&gt;&lt;&lt;set $L += 2&gt;&gt;&lt;&lt;goto &quot;CAL&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
     &lt;span class=&quot;qbox-option&quot;&gt;&lt;&lt;link &quot;你一邊希望獲得認可，一邊又害怕開口暴露無能，只能默默懷疑自己配不上任何肯定。&quot;&gt;&gt;&lt;&lt;set $L += 1&gt;&gt;&lt;&lt;set $A += 1&gt;&gt;&lt;&lt;goto &quot;CAL&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
   &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="CAL" tags="" position="1200,600" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="CAL" tags="" position="1200,600" size="100,100">&lt;style&gt;
+.bsti-resultbox {
+  background: #fff8ef;
+  border-radius: 2.2em;
+  border: 2.5px solid #e3ccb1;
+  box-shadow: 0 6px 32px 0 rgba(130,90,40,0.10);
+  margin: 2.3em auto 1.2em auto;
+  padding: 1.7em 2em 2em 2em;
+  max-width: 440px;
+  text-align: center;
+  font-family: &#39;Noto Serif TC&#39;, serif, &#39;微軟正黑體&#39;, &#39;標楷體&#39;, serif;
+}
+.bsti-result-title {
+  font-size: 1.28em;
+  font-weight: bold;
+  color: #815c30;
+  margin-bottom: 0.3em;
+  margin-top: 0.1em;
+}
+.bsti-bar-row {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+  justify-content: space-between;
+}
+.bsti-bar-label, .bsti-bar-labelR {
+  font-size: 1.07em;
+  width: 4.3em;
+  color: #b09c72;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bsti-bar-track {
+  flex: 1 1 auto;
+  background: #f6e7cf;
+  border-radius: 1em;
+  margin: 0 0.7em;
+  height: 1.2em;
+  position: relative;
+  overflow: hidden;
+  border: 1.2px solid #ebd7b6;
+}
+.bsti-bar-inner {
+  height: 100%;
+  border-radius: 1em;
+  background: linear-gradient(90deg,#ecd2b3,#e1b784 85%);
+  position: absolute;
+  left: 0; top: 0;
+  z-index: 1;
+  transition: width 0.6s cubic-bezier(.62,.16,.39,1);
+}
+.bsti-bar-pct-left {
+  font-size: 0.9em;
+  color: #be8a51;
+  font-weight: 600;
+  margin-left: 0.4em;
+  user-select: none;
+}
+.bsti-bar-pct-right {
+  font-size: 0.9em;
+  color: #be8a51;
+  font-weight: 600;
+  margin-right: 0.4em;
+  user-select: none;
+}
+.bsti-code {
+  margin: 2em 0 0.8em 0;
+  font-size: 2.1em;
+  font-weight: bold;
+  color: #be8a51;
+  letter-spacing: 0.17em;
+  background: linear-gradient(90deg,#fff3e0 60%,#ffeedd 100%);
+  border-radius: 1.2em;
+  padding: 0.19em 1.08em 0.11em 1.08em;
+  border: 1.5px solid #eed9bb;
+  box-shadow: 0 2px 10px 0 rgba(180,120,60,0.10);
+  display: inline-block;
+}
+.bsti-nextbtn {
+  background: #fff6e4 !important;
+  color: #7a5132 !important;
+  border: 2.5px solid #dec8a3 !important;
+  border-radius: 1.5em !important;
+  font-size: 1.15em !important;
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  padding: 0.76em 1.4em !important;
+  margin-top: 1.8em !important;
+  margin-bottom: 0.6em !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 10px 0 rgba(170,120,60,0.12) !important;
+  transition: all 0.17s cubic-bezier(.8,.2,.3,.98) !important;
+  outline: none !important;
+}
+.bsti-nextbtn:hover {
+  background: #ffecd0 !important;
+  color: #b88443 !important;
+  border-color: #e8bc80 !important;
+}
+&lt;/style&gt;
+
 &lt;&lt;set $code = &quot;&quot;&gt;&gt;
 &lt;&lt;if $I &gt;= $E&gt;&gt;&lt;&lt;set $code += &quot;I&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;E&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $A &gt;= $D&gt;&gt;&lt;&lt;set $code += &quot;A&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;D&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $O &gt;= $W&gt;&gt;&lt;&lt;set $code += &quot;O&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;W&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $G &gt;= $L&gt;&gt;&lt;&lt;set $code += &quot;G&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;L&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-你的陰影人格代碼：&lt;b&gt;&lt;&lt;=$code&gt;&gt;&lt;/b&gt;&lt;br&gt;
-&lt;br&gt;
-每個字母的得分：&lt;br&gt;
-I = &lt;&lt;=$I&gt;&gt;, E = &lt;&lt;=$E&gt;&gt;, &lt;br&gt;
-A = &lt;&lt;=$A&gt;&gt;, D = &lt;&lt;=$D&gt;&gt;, &lt;br&gt;
-O = &lt;&lt;=$O&gt;&gt;, W = &lt;&lt;=$W&gt;&gt;, &lt;br&gt;
-G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
+&lt;div class=&quot;bsti-resultbox&quot;&gt;
+  &lt;div class=&quot;bsti-result-title&quot;&gt;你的陰影人格傾向&lt;/div&gt;
+  &lt;div id=&quot;bsti-bars&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;bsti-code&quot;&gt;&lt;&lt;=$code&gt;&gt;&lt;/div&gt;
+  &lt;div style=&quot;margin-top:1.7em;font-size:0.99em;color:#b0986a;&quot;&gt;
+    點下方按鈕，解鎖你的專屬陰影人格
+  &lt;/div&gt;
+  &lt;&lt;button &quot;查看專屬陰影人格&quot; class=&quot;bsti-nextbtn&quot;&gt;&gt;
+    &lt;&lt;goto $code&gt;&gt;
+  &lt;&lt;/button&gt;&gt;
 &lt;/div&gt;
-&lt;&lt;button &quot;查看專屬陰影人格&quot;&gt;&gt;
-  &lt;&lt;goto $code&gt;&gt;
-&lt;&lt;/button&gt;&gt;
 
 &lt;&lt;set $name = $playerName || &quot;&quot;&gt;&gt;
 
 &lt;script&gt;
 (function() {
-  var url = &quot;https://formspree.io/f/xzzvpwdk&quot;;
-  var data = {
-    name: State.variables.name || &quot;&quot;,
-    code: State.variables.code || &quot;&quot;,
-    I: State.variables.I,
-    E: State.variables.E,
-    A: State.variables.A,
-    D: State.variables.D,
-    O: State.variables.O,
-    W: State.variables.W,
-    G: State.variables.G,
-    L: State.variables.L
-  };
-  fetch(url, {
-    method: &quot;POST&quot;,
-    body: JSON.stringify(data),
-    headers: { &quot;Content-Type&quot;: &quot;application/json&quot; }
-  });
+  function getBarHTML(leftLabel, rightLabel, leftScore, rightScore) {
+    var total = leftScore + rightScore;
+    var ratio = total &gt; 0 ? leftScore / total : 0.5;
+    var pctL = Math.round(ratio * 100);
+    var pctR = 100 - pctL;
+    var barPct = (0.12 + ratio * 0.76) * 100;
+    return &#39;&lt;div class=&quot;bsti-bar-row&quot;&gt;&#39;
+      + &#39;&lt;div class=&quot;bsti-bar-label&quot;&gt;&#39; + leftLabel + &#39;&lt;span class=&quot;bsti-bar-pct-left&quot;&gt;&#39; + pctL + &#39;%&lt;/span&gt;&lt;/div&gt;&#39;
+      + &#39;&lt;div class=&quot;bsti-bar-track&quot;&gt;&#39;
+        + &#39;&lt;div class=&quot;bsti-bar-inner&quot; style=&quot;width:&#39; + barPct + &#39;%&quot;&gt;&lt;/div&gt;&#39;
+      + &#39;&lt;/div&gt;&#39;
+      + &#39;&lt;div class=&quot;bsti-bar-labelR&quot;&gt;&lt;span class=&quot;bsti-bar-pct-right&quot;&gt;&#39; + pctR + &#39;%&lt;/span&gt;&#39; + rightLabel + &#39;&lt;/div&gt;&#39;
+      + &#39;&lt;/div&gt;&#39;;
+  }
+
+  var html =
+    getBarHTML(&#39;內耗(I)&#39;, &#39;外耗(E)&#39;, State.variables.I, State.variables.E) +
+    getBarHTML(&#39;焦慮(A)&#39;, &#39;冷漠(D)&#39;, State.variables.A, State.variables.D) +
+    getBarHTML(&#39;逞強(O)&#39;, &#39;逃避(W)&#39;, State.variables.O, State.variables.W) +
+    getBarHTML(&#39;自大(G)&#39;, &#39;自卑(L)&#39;, State.variables.G, State.variables.L);
+
+  document.getElementById(&#39;bsti-bars&#39;).innerHTML = html;
 })();
 &lt;/script&gt;
 </tw-passagedata><tw-passagedata pid="36" name="EAWG" tags="" position="1325,1150" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
@@ -921,9 +1032,10 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
   &lt;div class=&quot;twee-char-mainrow&quot;&gt;
     &lt;img src=&quot;https://i.postimg.cc/Jz6fRyCY/E-A-W-G.png&quot; class=&quot;twee-char-portrait&quot; alt=&quot;角色形象圖&quot;&gt;
     &lt;div class=&quot;twee-char-quotes&quot;&gt;
-      &lt;span&gt;「我不背鍋，誰背鍋？」&lt;/span&gt;
-      &lt;span&gt;「甩鍋技術哪家強？」&lt;/span&gt;
-      &lt;span&gt;「你以為我在幫你，其實我在幫我自己。」&lt;/span&gt;
+      &lt;span&gt;「被騙而去死的人，在這世上被叫做喪家犬。」&lt;/span&gt;
+      &lt;span&gt;「我沒有說謊，我何必說謊」&lt;/span&gt;
+      &lt;span&gt;「If you can&#39;t dazzle them with brilliance, baffle them with bullshit.&lt;/span&gt;
+      &lt;span&gt;「全部自分の手を汚さずに済む方法、ちゃんと考えてるさ。《DEATH NOTE》」&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1318,9 +1430,11 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
   &lt;div class=&quot;twee-char-mainrow&quot;&gt;
     &lt;img src=&quot;https://i.postimg.cc/133xxG2N/E-A-O-G.png&quot; class=&quot;twee-char-portrait&quot; alt=&quot;角色形象圖&quot;&gt;
     &lt;div class=&quot;twee-char-quotes&quot;&gt;
-      &lt;span&gt;「社會我哥，人狠話不多。」&lt;/span&gt;
-      &lt;span&gt;「你以為我會放過你？太天真了。」&lt;/span&gt;
-      &lt;span&gt;「我只對贏有興趣。」&lt;/span&gt;
+      &lt;span&gt;「我不喜歡你不是我的錯，是你太無趣了。」&lt;/span&gt;
+      &lt;span&gt;「對不起你誤會了，我就是故意的。」&lt;/span&gt;
+      &lt;span&gt;「I don’t have an attitude problem, you have a perception problem.&lt;/span&gt;
+      &lt;span&gt;「王の力はお前を孤独にする。」
+      &lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1373,20 +1487,21 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
 [[重新開始-&gt;Start]]</tw-passagedata><tw-passagedata pid="43" name="EAOL" tags="" position="1225,1250" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
   &lt;!-- 頂部 ICON+標題 --&gt;
   &lt;div class=&quot;twee-char-header&quot;&gt;
-    &lt;img src=&quot;https://i.postimg.cc/kgRQ9fzV/EAOL.png&quot; alt=&quot;icon&quot; class=&quot;twee-char-header-icon&quot;&gt;
+    &lt;img src=&quot;https://i.postimg.cc/kgRQ9fzV/EAOL.png&quot; alt=&quot;角色ICON&quot; class=&quot;twee-char-header-icon&quot;&gt;
     &lt;div class=&quot;twee-char-header-title&quot;&gt;
-      EAWG｜狡猾煽惑師
-      &lt;span class=&quot;twee-char-header-title-en&quot;&gt;(The Cunning Instigator)&lt;/span&gt;
+      EAOL｜痛苦驅役師
+      &lt;span class=&quot;twee-char-header-title-en&quot;&gt;(The Pain Enforcer)&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
-  &lt;!-- 形象大圖＋名言 --&gt;
+  &lt;!-- 第一分區：形象大圖＋名言 --&gt;
   &lt;div class=&quot;twee-char-mainrow&quot;&gt;
     &lt;img src=&quot;https://i.postimg.cc/Jhs9011r/E-A-O-L.png&quot; class=&quot;twee-char-portrait&quot; alt=&quot;角色形象圖&quot;&gt;
     &lt;div class=&quot;twee-char-quotes&quot;&gt;
-      &lt;span&gt;「我不背鍋，誰背鍋？」&lt;/span&gt;
-      &lt;span&gt;「甩鍋技術哪家強？」&lt;/span&gt;
-      &lt;span&gt;「你以為我在幫你，其實我在幫我自己。」&lt;/span&gt;
+      &lt;span&gt;「小丑竟是我自己。」&lt;/span&gt;
+      &lt;span&gt;「誰讓我難過，我就讓誰難過。」&lt;/span&gt;
+      &lt;span&gt;「你不說我也不說，我們一起煩惱。」&lt;/span&gt;
+      &lt;span&gt;「希望があるから絶望があるのよ。」。」&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1396,18 +1511,18 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
     &lt;span class=&quot;twee-char-icon&quot;&gt;🔍&lt;/span&gt; 性格深度剖析
   &lt;/div&gt;
   &lt;div class=&quot;twee-char-desc&quot;&gt;
-    &lt;b&gt;面對自我：&lt;/b&gt;你有很強的保護意識，遇到壓力時最擅長的是推卸責任、逃避麻煩。你表面愛幫忙，實際會讓別人為你收拾爛攤子；你喜歡以自我為中心，喜功怕錯。你有時會高調炫耀、低調躲雷，是典型的「出事消失型」角色。&lt;br&gt;
-    &lt;ul class=&quot;twee-char-list&quot; style=&quot;margin-top:10px;&quot;&gt;
-      &lt;li&gt;懂得巧妙避開危機，把壓力分擔給別人。&lt;/li&gt;
-      &lt;li&gt;危機時能迅速自保，常讓自己全身而退。&lt;/li&gt;
-      &lt;li&gt;愛炫耀自己付出，但很難承認錯誤。&lt;/li&gt;
-      &lt;li&gt;討厭長期承擔責任，容易感到壓力山大。&lt;/li&gt;
+    &lt;b&gt;面對自我：&lt;/b&gt;你逞強防禦自卑，總用攻擊掩飾自己的敏感與不安全感。壓力來時容易對人發火，冷靜後卻又懷疑自己是不是太脆弱。
+    &lt;ul class=&quot;twee-char-list&quot;&gt;
+      &lt;li&gt;你有強烈的防禦機制，習慣先發制人。&lt;/li&gt;
+      &lt;li&gt;面對壓力常用情緒攻擊自保。&lt;/li&gt;
+      &lt;li&gt;害怕被看不起，外表強悍內心卻容易自卑。&lt;/li&gt;
+      &lt;li&gt;偶爾情緒爆發後會陷入自責和沮喪。&lt;/li&gt;
     &lt;/ul&gt;
     &lt;div style=&quot;margin-top:10px;&quot;&gt;
-      &lt;b&gt;面對朋友：&lt;/b&gt; 出問題先找替罪羊，自己則裝作英雄。&lt;br&gt;
-      &lt;b&gt;面對戀人：&lt;/b&gt; 吵架會放大自己痛苦讓對方愧疚，事後不處理矛盾直接躲開。&lt;br&gt;
-      &lt;b&gt;面對工作：&lt;/b&gt; 危機時誇大自己貢獻，出事則讓同事頂雷。&lt;br&gt;
-      &lt;b&gt;面對家人：&lt;/b&gt; 家事不順推給兄弟姐妹，自己全程強調付出最多。&lt;br&gt;
+      &lt;b&gt;面對朋友：&lt;/b&gt; 對朋友嚴厲挑剔，事後又焦慮他們會不會討厭自己。&lt;br&gt;
+      &lt;b&gt;面對戀人：&lt;/b&gt; 吵架時大聲指責對方，冷靜下來又怕戀人離開自己。&lt;br&gt;
+      &lt;b&gt;面對工作：&lt;/b&gt; 領導團隊嚴格要求，但失敗後失落、沮喪怕丟臉。&lt;br&gt;
+      &lt;b&gt;面對家人：&lt;/b&gt; 家中權威，問題來了先發火，過後卻深感自卑。&lt;br&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1417,11 +1532,10 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
     &lt;span class=&quot;twee-char-icon&quot;&gt;🔒&lt;/span&gt; 壓抑你陰影人格的封印師
   &lt;/div&gt;
   &lt;div class=&quot;twee-char-seal&quot;&gt;
-    &lt;b&gt;機智辯手（ENTP）&lt;/b&gt;：以幽默和創意破解你的操控手法，引導你學習誠實互動。&lt;br&gt;
-    &lt;b&gt;同理對話者（INFP）&lt;/b&gt;：用價值共鳴與情感連結融化你的自利防線，帶來信任感。&lt;br&gt;
-    &lt;b&gt;行動鼓舞者（ESTP）&lt;/b&gt;：以直接行動和挑戰精神，促使你正面面對問題，不再逃避。
+    &lt;b&gt;策略導師（INTJ）&lt;/b&gt;：會用邏輯和遠見助你跳脫自責與攻擊的死循環。
+    &lt;b&gt;深度療癒者（INFJ）&lt;/b&gt;：以同理和洞察帶你走出自責低谷，找到內心力量。
+    &lt;b&gt;行動示範者（ISTP）&lt;/b&gt;：以冷靜務實行動幫助你落實轉變，從困境中前進。
   &lt;/div&gt;
-
   &lt;!-- 小標：性格建議 --&gt;
   &lt;div class=&quot;twee-char-section-title&quot;&gt;
     &lt;span class=&quot;twee-char-bar&quot;&gt;&lt;/span&gt;
@@ -1429,14 +1543,15 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
   &lt;/div&gt;
   &lt;div class=&quot;twee-char-tips&quot;&gt;
     &lt;ul&gt;
-      &lt;li&gt;勇於承認錯誤與責任，有助於建立真正的信任關係。&lt;/li&gt;
-      &lt;li&gt;學會面對問題，而非總想找人「背鍋」。&lt;/li&gt;
-      &lt;li&gt;積極參與團隊，而不是只為自己謀利。&lt;/li&gt;
-      &lt;li&gt;偶爾為別人著想，關係會更輕鬆愉快。&lt;/li&gt;
+      &lt;li&gt;放下對「強者」的執念，允許自己展現真情感。&lt;/li&gt;
+      &lt;li&gt;多用溝通代替責難，關係會柔和很多。&lt;/li&gt;
+      &lt;li&gt;適當表達自己的脆弱，反而更能獲得理解。&lt;/li&gt;
+      &lt;li&gt;嘗試自我接納，而不是一味自責。&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-[[重新開始-&gt;Start]]</tw-passagedata><tw-passagedata pid="44" name="IAWG" tags="" position="1325,950" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
+[[重新開始-&gt;Start]]
+</tw-passagedata><tw-passagedata pid="44" name="IAWG" tags="" position="1325,950" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
   &lt;!-- 頂部 ICON+標題 --&gt;
   &lt;div class=&quot;twee-char-header&quot;&gt;
     &lt;img src=&quot;https://i.postimg.cc/TwN1KXWT/IAWG.png&quot; alt=&quot;icon&quot; class=&quot;twee-char-header-icon&quot;&gt;
@@ -1450,9 +1565,10 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
   &lt;div class=&quot;twee-char-mainrow&quot;&gt;
     &lt;img src=&quot;https://i.postimg.cc/FRjCkzw4/I-A-W-G.png&quot; class=&quot;twee-char-portrait&quot; alt=&quot;角色形象圖&quot;&gt;
     &lt;div class=&quot;twee-char-quotes&quot;&gt;
-      &lt;span&gt;「嘴上說不在乎，心裡早就畫小劇場了。」&lt;/span&gt;
       &lt;span&gt;「人在江湖，表面風光，實則內心慌。」&lt;/span&gt;
       &lt;span&gt;「想贏怕輸還想躺。」&lt;/span&gt;
+      &lt;span&gt;「You wanna know what my problem is? I want everyone to like me.」&lt;/span&gt;
+      &lt;span&gt;「他人に認められなきゃ、生きてる意味がないと思ってた。」&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1516,9 +1632,10 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
   &lt;div class=&quot;twee-char-mainrow&quot;&gt;
     &lt;img src=&quot;https://i.postimg.cc/DwMMtt1t/I-A-W-L.png&quot; class=&quot;twee-char-portrait&quot; alt=&quot;角色形象圖&quot;&gt;
     &lt;div class=&quot;twee-char-quotes&quot;&gt;
-      &lt;span&gt;「不想努力了。」&lt;/span&gt;
-      &lt;span&gt;「我太難了！」&lt;/span&gt;
-      &lt;span&gt;「我emo了。」&lt;/span&gt;
+      &lt;span&gt;「活著只是因為死不了。」&lt;/span&gt;
+      &lt;span&gt;「我太難了！我是不是連做廢物的資格都沒有？」&lt;/span&gt;
+      &lt;span&gt;「Sometimes I can hear my bones straining under the weight of all the lives I’m not living.」&lt;/span&gt;
+      &lt;span&gt;「生まれて、すみません。《人間失格》」&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1843,9 +1960,10 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
   &lt;div class=&quot;twee-char-mainrow&quot;&gt;
     &lt;img src=&quot;https://i.postimg.cc/vHGk97QS/I-A-O-G.png&quot; class=&quot;twee-char-portrait&quot; alt=&quot;角色形象圖&quot;&gt;
     &lt;div class=&quot;twee-char-quotes&quot;&gt;
-      &lt;span&gt;「今天也要做一個內耗小天才。」&lt;/span&gt;
-      &lt;span&gt;「都是我的鍋，我背著吧。」&lt;/span&gt;
-      &lt;span&gt;「表面冷靜如山，內心火山爆發。」&lt;/span&gt;
+      &lt;span&gt;「都是我的錯，這樣大家比較輕鬆吧。」&lt;/span&gt;
+      &lt;span&gt;「要不是我一直修正，大家還能活？」&lt;/span&gt;
+      &lt;span&gt;「Sometimes being the strong one is just a habit, not a choice.」&lt;/span&gt;
+      &lt;span&gt;「強くなければ生きていけない。優しくなければ生きている資格がない。」&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1910,8 +2028,9 @@ G = &lt;&lt;=$G&gt;&gt;, L = &lt;&lt;=$L&gt;&gt;
     &lt;img src=&quot;https://i.postimg.cc/PrKcMLJf/I-A-O-L.png&quot; class=&quot;twee-char-portrait&quot; alt=&quot;角色形象圖&quot;&gt;
     &lt;div class=&quot;twee-char-quotes&quot;&gt;
       &lt;span&gt;「小丑竟是我自己。」&lt;/span&gt;
-      &lt;span&gt;「對不起，都是我的問題！」&lt;/span&gt;
-      &lt;span&gt;「晚上睡不著，因為白天說錯了一句話。」&lt;/span&gt;
+      &lt;span&gt;「比起別人討厭我，我更怕自己討厭自己。」&lt;/span&gt;
+      &lt;span&gt;「I replay every awkward moment in my head until I hate myself.」&lt;/span&gt;
+      &lt;span&gt;「僕なんて、いないほうがいいのに……。」&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
