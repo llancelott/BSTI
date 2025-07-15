@@ -263,35 +263,44 @@ button.gpt-main:hover {
 }
 .twee-char-header {
   display: flex;
-  align-items: center;
+  align-items: center;      /* 垂直置中 icon 與文字區 */
   margin-bottom: 0em;
+  gap: 15px;                /* icon 與文字間距 */
+  justify-content: flex-start; /* 靠左排列 */
 }
+
 .twee-char-header-icon {
   width: 52px;
   height: 52px;
   object-fit: contain;
   flex-shrink: 0;
   border-radius: 13px;
-  margin-right: 15px;
   box-shadow: 0 1px 8px #dac7b3a0;
   background: #fff7;
 }
+
 .twee-char-header-title {
+  display: flex;
+  flex-direction: column;  /* 保持主標、副標上下排列 */
+  justify-content: center; /* 文字區垂直置中 */
   color: #D7263D;
   font-weight: bold;
   font-size: 1.36em;
   line-height: 1.2;
   letter-spacing: 0.03em;
-  display: flex;
-  flex-direction: column;
+  white-space: normal;     /* 允許換行 */
+  min-width: 0;            /* 防止內容溢出 */
 }
+
 .twee-char-header-title-en {
   font-size: 0.81em;
   color: #666;
   font-weight: normal;
-  margin-top: 2px;
+  margin-top: 4px;         /* 主副標間距改大一點 */
   letter-spacing: 0.01em;
+  white-space: normal;
 }
+
 
 .twee-char-section-title {
   display: flex;
@@ -323,22 +332,28 @@ button.gpt-main:hover {
 }
 
 .twee-char-mainrow {
-  display: flex;
-  flex-direction: column; /* 垂直排列 */
-  align-items: center;    /* 水平置中 */
-  gap: 0em;             /* 圖片與文字間距 */
-  margin: 1px 0 1px 0;  /* 上下間距 */
+  max-width: 80vw !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.8em !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.5em !important;
 }
 
 .twee-char-portrait {
-  width: 360px;           /* 放大寬度，可調整 */
-  max-width: 90vw;        /* 響應式 */
-  height: auto;
-  border-radius: 13px;
-  box-shadow: 0 3px 14px #dac7b320;
-  background: #f3ede1;
-  border: 2.5px solid #dac7b380;
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 13px !important;
+  box-shadow: 0 3px 14px #dac7b320 !important;
+  background: #f3ede1 !important;
+  border: 2.5px solid #dac7b380 !important;
+  max-width: none !important;
 }
+
 
 .twee-char-quotes {
   width: 360px;           /* 與圖片寬度統一 */
@@ -351,6 +366,11 @@ button.gpt-main:hover {
   display: flex;
   flex-direction: column;
   gap: 0.3em;
+
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .twee-char-quotes span {
