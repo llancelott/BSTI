@@ -994,34 +994,41 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
 }
 &lt;/style&gt;
 
+&lt;!-- 計算 $code 變數 --&gt;
 &lt;&lt;set $code = &quot;&quot;&gt;&gt;
 &lt;&lt;if $I &gt;= $E&gt;&gt;&lt;&lt;set $code += &quot;I&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;E&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $A &gt;= $D&gt;&gt;&lt;&lt;set $code += &quot;A&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;D&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $O &gt;= $W&gt;&gt;&lt;&lt;set $code += &quot;O&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;W&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $G &gt;= $L&gt;&gt;&lt;&lt;set $code += &quot;G&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;L&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-&lt;&lt;set $name = $playerName || &quot;&quot;&gt;&gt;
+&lt;!-- 儲存名字（如果有） --&gt;
+&lt;&lt;set $name = $playerName || &quot;匿名&quot;&gt;&gt;
 
 &lt;div class=&quot;bsti-resultbox&quot;&gt;
   &lt;div class=&quot;bsti-result-title&quot;&gt;你的陰影人格傾向&lt;/div&gt;
   &lt;div id=&quot;bsti-bars&quot;&gt;&lt;/div&gt;
-
   &lt;div class=&quot;bsti-code&quot;&gt;&lt;&lt;=$code&gt;&gt;&lt;/div&gt;
+  &lt;div style=&quot;margin-top:1.7em;font-size:0.99em;color:#b0986a;&quot;&gt;
+    點下方按鈕，解鎖你的專屬陰影人格
+  &lt;/div&gt;
 
-  &lt;button id=&quot;submitBtn&quot; class=&quot;bsti-nextbtn&quot;&gt;查看專屬陰影人格&lt;/button&gt;
+  &lt;&lt;button &quot;查看專屬陰影人格&quot; class=&quot;bsti-nextbtn&quot;&gt;&gt;
+    &lt;&lt;run sendResultAndContinue()&gt;&gt;
+  &lt;&lt;/button&gt;&gt;
 &lt;/div&gt;
 
-&lt;form id=&quot;resultForm&quot; action=&quot;https://formspree.io/f/xzzvpwdk&quot; method=&quot;POST&quot; style=&quot;display:none;&quot;&gt;
+&lt;!-- 隱藏的表單（不包含 email，也不會跳轉） --&gt;
+&lt;form id=&quot;resultForm&quot; action=&quot;https://formspree.io/f/xzzvpwdk&quot; method=&quot;POST&quot; style=&quot;display: none;&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;&lt;&lt;=$name&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;code&quot; id=&quot;form-code&quot; value=&quot;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;i&quot; value=&quot;&lt;&lt;=State.variables.I&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;e&quot; value=&quot;&lt;&lt;=State.variables.E&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;a&quot; value=&quot;&lt;&lt;=State.variables.A&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;d&quot; value=&quot;&lt;&lt;=State.variables.D&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;o&quot; value=&quot;&lt;&lt;=State.variables.O&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;w&quot; value=&quot;&lt;&lt;=State.variables.W&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;g&quot; value=&quot;&lt;&lt;=State.variables.G&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;l&quot; value=&quot;&lt;&lt;=State.variables.L&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;code&quot; value=&quot;&lt;&lt;=$code&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;i&quot; value=&quot;&lt;&lt;=$I&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;e&quot; value=&quot;&lt;&lt;=$E&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;a&quot; value=&quot;&lt;&lt;=$A&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;d&quot; value=&quot;&lt;&lt;=$D&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;o&quot; value=&quot;&lt;&lt;=$O&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;w&quot; value=&quot;&lt;&lt;=$W&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;g&quot; value=&quot;&lt;&lt;=$G&gt;&gt;&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;l&quot; value=&quot;&lt;&lt;=$L&gt;&gt;&quot;&gt;
 &lt;/form&gt;
 
 &lt;script&gt;
@@ -1049,29 +1056,20 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
 
   document.getElementById(&#39;bsti-bars&#39;).innerHTML = html;
 
-  document.getElementById(&quot;submitBtn&quot;).addEventListener(&quot;click&quot;, function() {
-    document.getElementById(&quot;form-code&quot;).value = $code;
-
-    var form = document.getElementById(&quot;resultForm&quot;);
-    var formData = new FormData(form);
+  // 定義全域函式，在 Twine &lt;&lt;run&gt;&gt; 中觸發
+  window.sendResultAndContinue = function() {
+    const form = document.getElementById(&quot;resultForm&quot;);
+    const formData = new FormData(form);
 
     fetch(form.action, {
       method: &quot;POST&quot;,
       body: formData,
-      headers: {
-        &#39;Accept&#39;: &#39;application/json&#39;
-      }
-    }).then(response =&gt; {
-      if (response.ok) {
-        // 成功送出表單後，跳轉到該陰影人格代碼對應的 Passage
-        SugarCube.Engine.play($code);
-      } else {
-        alert(&quot;提交失敗，請稍後再試&quot;);
-      }
-    }).catch(() =&gt; {
-      alert(&quot;提交出錯，請檢查網路&quot;);
+      headers: { &#39;Accept&#39;: &#39;application/json&#39; }
+    }).finally(() =&gt; {
+      // 無論成功或失敗都繼續
+      SugarCube.Engine.go(State.variables.code);
     });
-  });
+  };
 })();
 &lt;/script&gt;
 </tw-passagedata><tw-passagedata pid="36" name="EAWG" tags="" position="1325,1150" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
