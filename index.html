@@ -889,9 +889,7 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
     &lt;span class=&quot;qbox-option&quot;&gt;&lt;&lt;link &quot;你直視鏡子時，腦海全是「我是不是什麼都比不上別人」，甚至連自己的外表都看不起。&quot;&gt;&gt;&lt;&lt;set $L += 2&gt;&gt;&lt;&lt;goto &quot;CAL&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
     &lt;span class=&quot;qbox-option&quot;&gt;&lt;&lt;link &quot;你一邊希望獲得認可，一邊又害怕開口暴露無能，只能默默懷疑自己配不上任何肯定。&quot;&gt;&gt;&lt;&lt;set $L += 1&gt;&gt;&lt;&lt;set $A += 1&gt;&gt;&lt;&lt;goto &quot;CAL&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
   &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="CAL" tags="" position="1200,600" size="100,100">:: 結果頁
-
-&lt;style&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="CAL" tags="" position="1200,600" size="100,100">&lt;style&gt;
 .bsti-resultbox {
   background: #fff8ef;
   border-radius: 2.2em;
@@ -996,44 +994,36 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
 }
 &lt;/style&gt;
 
-&lt;!-- 計算代碼 --&gt;
-&lt;&lt;set $code = &quot;&quot;&gt;&gt;
-&lt;&lt;if $I &gt;= $E&gt;&gt;&lt;&lt;set $code += &quot;I&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;E&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $A &gt;= $D&gt;&gt;&lt;&lt;set $code += &quot;A&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;D&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $O &gt;= $W&gt;&gt;&lt;&lt;set $code += &quot;O&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;W&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $G &gt;= $L&gt;&gt;&lt;&lt;set $code += &quot;G&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;L&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;set $name = $playerName || &quot;匿名&quot;&gt;&gt;
-
-&lt;!-- 顯示結果 --&gt;
 &lt;div class=&quot;bsti-resultbox&quot;&gt;
   &lt;div class=&quot;bsti-result-title&quot;&gt;你的陰影人格傾向&lt;/div&gt;
   &lt;div id=&quot;bsti-bars&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;bsti-code&quot;&gt;&lt;&lt;=$code&gt;&gt;&lt;/div&gt;
+  &lt;div class=&quot;bsti-code&quot; id=&quot;code-display&quot;&gt;&lt;/div&gt;
   &lt;div style=&quot;margin-top:1.7em;font-size:0.99em;color:#b0986a;&quot;&gt;
     點下方按鈕，解鎖你的專屬陰影人格
   &lt;/div&gt;
-  &lt;&lt;button &quot;查看專屬陰影人格&quot; class=&quot;bsti-nextbtn&quot;&gt;&gt;
-    &lt;&lt;run sendFormspree()&gt;&gt;
-  &lt;&lt;/button&gt;&gt;
+  &lt;button id=&quot;btnNext&quot; class=&quot;bsti-nextbtn&quot;&gt;查看專屬陰影人格&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;!-- 隱藏表單 --&gt;
 &lt;form id=&quot;formspreeForm&quot; action=&quot;https://formspree.io/f/xzzvpwdk&quot; method=&quot;POST&quot; style=&quot;display:none;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;&lt;&lt;=$name&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;code&quot; value=&quot;&lt;&lt;=$code&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;I&quot; value=&quot;&lt;&lt;=$I&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;E&quot; value=&quot;&lt;&lt;=$E&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;A&quot; value=&quot;&lt;&lt;=$A&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;D&quot; value=&quot;&lt;&lt;=$D&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;O&quot; value=&quot;&lt;&lt;=$O&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;W&quot; value=&quot;&lt;&lt;=$W&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;G&quot; value=&quot;&lt;&lt;=$G&gt;&gt;&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;L&quot; value=&quot;&lt;&lt;=$L&gt;&gt;&quot;&gt;
+  &lt;!-- input 將由 JS 動態加入 --&gt;
 &lt;/form&gt;
 
-&lt;!-- 製作長條圖 --&gt;
 &lt;script&gt;
-(function () {
+(function(){
+  const v = State.variables;
+
+  // 計算 code
+  let code = &quot;&quot;;
+  code += v.I &gt;= v.E ? &quot;I&quot; : &quot;E&quot;;
+  code += v.A &gt;= v.D ? &quot;A&quot; : &quot;D&quot;;
+  code += v.O &gt;= v.W ? &quot;O&quot; : &quot;W&quot;;
+  code += v.G &gt;= v.L ? &quot;G&quot; : &quot;L&quot;;
+
+  // 顯示 code
+  document.getElementById(&quot;code-display&quot;).textContent = code;
+
+  // 建立長條圖
   function getBarHTML(leftLabel, rightLabel, leftScore, rightScore) {
     const total = leftScore + rightScore;
     const ratio = total &gt; 0 ? leftScore / total : 0.5;
@@ -1049,33 +1039,55 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
     &lt;/div&gt;`;
   }
 
-  const v = State.variables;
-  const html = 
+  const barsHTML =
     getBarHTML(&#39;內耗(I)&#39;, &#39;外耗(E)&#39;, v.I, v.E) +
     getBarHTML(&#39;焦慮(A)&#39;, &#39;冷漠(D)&#39;, v.A, v.D) +
     getBarHTML(&#39;逞強(O)&#39;, &#39;逃避(W)&#39;, v.O, v.W) +
     getBarHTML(&#39;自大(G)&#39;, &#39;自卑(L)&#39;, v.G, v.L);
 
-  document.getElementById(&quot;bsti-bars&quot;).innerHTML = html;
-})();
-&lt;/script&gt;
+  document.getElementById(&quot;bsti-bars&quot;).innerHTML = barsHTML;
 
-&lt;!-- JS送出表單後跳轉 --&gt;
-&lt;script&gt;
-function sendFormspree() {
-  const form = document.getElementById(&quot;formspreeForm&quot;);
+  // 表單動態建立並送出
+  function sendFormspree() {
+    const form = document.getElementById(&quot;formspreeForm&quot;);
+    form.innerHTML = &quot;&quot;; // 清空舊 input
 
-  fetch(form.action, {
-    method: &quot;POST&quot;,
-    body: new FormData(form),
-    headers: {
-      &#39;Accept&#39;: &#39;application/json&#39;
+    // 先用玩家名稱，沒就匿名
+    const playerName = v.playerName || &quot;匿名&quot;;
+
+    // 新增 hidden input helper
+    function addInput(name, value){
+      const input = document.createElement(&quot;input&quot;);
+      input.type = &quot;hidden&quot;;
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
     }
-  }).finally(() =&gt; {
-    // 無論成功或失敗都跳轉
-    Engine.play(State.getVar(&#39;$code&#39;));
-  });
-}
+
+    addInput(&quot;name&quot;, playerName);
+    addInput(&quot;code&quot;, code);
+    addInput(&quot;I&quot;, v.I);
+    addInput(&quot;E&quot;, v.E);
+    addInput(&quot;A&quot;, v.A);
+    addInput(&quot;D&quot;, v.D);
+    addInput(&quot;O&quot;, v.O);
+    addInput(&quot;W&quot;, v.W);
+    addInput(&quot;G&quot;, v.G);
+    addInput(&quot;L&quot;, v.L);
+
+    fetch(form.action, {
+      method: &quot;POST&quot;,
+      body: new FormData(form),
+      headers: { &#39;Accept&#39;: &#39;application/json&#39; }
+    }).finally(() =&gt; {
+      Engine.play(code);  // 跳轉
+    });
+  }
+
+  // 綁定按鈕事件
+  document.getElementById(&quot;btnNext&quot;).addEventListener(&quot;click&quot;, sendFormspree);
+
+})();
 &lt;/script&gt;
 </tw-passagedata><tw-passagedata pid="36" name="EAWG" tags="" position="1325,1150" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
   &lt;!-- 頂部 ICON+標題 --&gt;
