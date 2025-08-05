@@ -889,7 +889,9 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
     &lt;span class=&quot;qbox-option&quot;&gt;&lt;&lt;link &quot;你直視鏡子時，腦海全是「我是不是什麼都比不上別人」，甚至連自己的外表都看不起。&quot;&gt;&gt;&lt;&lt;set $L += 2&gt;&gt;&lt;&lt;goto &quot;CAL&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
     &lt;span class=&quot;qbox-option&quot;&gt;&lt;&lt;link &quot;你一邊希望獲得認可，一邊又害怕開口暴露無能，只能默默懷疑自己配不上任何肯定。&quot;&gt;&gt;&lt;&lt;set $L += 1&gt;&gt;&lt;&lt;set $A += 1&gt;&gt;&lt;&lt;goto &quot;CAL&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
   &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="CAL" tags="" position="1200,600" size="100,100">&lt;style&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="CAL" tags="" position="1200,600" size="100,100">:: 結果頁
+
+&lt;style&gt;
 .bsti-resultbox {
   background: #fff8ef;
   border-radius: 2.2em;
@@ -994,12 +996,15 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
 }
 &lt;/style&gt;
 
+&lt;!-- 計算代碼 --&gt;
 &lt;&lt;set $code = &quot;&quot;&gt;&gt;
 &lt;&lt;if $I &gt;= $E&gt;&gt;&lt;&lt;set $code += &quot;I&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;E&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $A &gt;= $D&gt;&gt;&lt;&lt;set $code += &quot;A&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;D&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $O &gt;= $W&gt;&gt;&lt;&lt;set $code += &quot;O&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;W&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $G &gt;= $L&gt;&gt;&lt;&lt;set $code += &quot;G&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $code += &quot;L&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set $name = $playerName || &quot;匿名&quot;&gt;&gt;
 
+&lt;!-- 顯示結果 --&gt;
 &lt;div class=&quot;bsti-resultbox&quot;&gt;
   &lt;div class=&quot;bsti-result-title&quot;&gt;你的陰影人格傾向&lt;/div&gt;
   &lt;div id=&quot;bsti-bars&quot;&gt;&lt;/div&gt;
@@ -1008,39 +1013,12 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
     點下方按鈕，解鎖你的專屬陰影人格
   &lt;/div&gt;
   &lt;&lt;button &quot;查看專屬陰影人格&quot; class=&quot;bsti-nextbtn&quot;&gt;&gt;
-    &lt;&lt;goto $code&gt;&gt;
+    &lt;&lt;run sendFormspree()&gt;&gt;
   &lt;&lt;/button&gt;&gt;
 &lt;/div&gt;
 
-&lt;&lt;set $name = $playerName || &quot;&quot;&gt;&gt;
-
-&lt;script&gt;
-(function() {
-  function getBarHTML(leftLabel, rightLabel, leftScore, rightScore) {
-    var total = leftScore + rightScore;
-    var ratio = total &gt; 0 ? leftScore / total : 0.5;
-    var pctL = Math.round(ratio * 100);
-    var pctR = 100 - pctL;
-    var barPct = (0.12 + ratio * 0.76) * 100;
-    return &#39;&lt;div class=&quot;bsti-bar-row&quot;&gt;&#39;
-      + &#39;&lt;div class=&quot;bsti-bar-label&quot;&gt;&#39; + leftLabel + &#39;&lt;span class=&quot;bsti-bar-pct-left&quot;&gt;&#39; + pctL + &#39;%&lt;/span&gt;&lt;/div&gt;&#39;
-      + &#39;&lt;div class=&quot;bsti-bar-track&quot;&gt;&#39;
-        + &#39;&lt;div class=&quot;bsti-bar-inner&quot; style=&quot;width:&#39; + barPct + &#39;%&quot;&gt;&lt;/div&gt;&#39;
-      + &#39;&lt;/div&gt;&#39;
-      + &#39;&lt;div class=&quot;bsti-bar-labelR&quot;&gt;&lt;span class=&quot;bsti-bar-pct-right&quot;&gt;&#39; + pctR + &#39;%&lt;/span&gt;&#39; + rightLabel + &#39;&lt;/div&gt;&#39;
-      + &#39;&lt;/div&gt;&#39;;
-  }
-
-  var html =
-    getBarHTML(&#39;內耗(I)&#39;, &#39;外耗(E)&#39;, State.variables.I, State.variables.E) +
-    getBarHTML(&#39;焦慮(A)&#39;, &#39;冷漠(D)&#39;, State.variables.A, State.variables.D) +
-    getBarHTML(&#39;逞強(O)&#39;, &#39;逃避(W)&#39;, State.variables.O, State.variables.W) +
-    getBarHTML(&#39;自大(G)&#39;, &#39;自卑(L)&#39;, State.variables.G, State.variables.L);
-
-  document.getElementById(&#39;bsti-bars&#39;).innerHTML = html;
-})();
-&lt;/script&gt;
-&lt;form id=&quot;hiddenForm&quot; action=&quot;https://formspree.io/f/xzzvpwdk&quot; method=&quot;POST&quot; style=&quot;display: none;&quot;&gt;
+&lt;!-- 隱藏表單 --&gt;
+&lt;form id=&quot;formspreeForm&quot; action=&quot;https://formspree.io/f/xzzvpwdk&quot; method=&quot;POST&quot; style=&quot;display:none;&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;&lt;&lt;=$name&gt;&gt;&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;code&quot; value=&quot;&lt;&lt;=$code&gt;&gt;&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;I&quot; value=&quot;&lt;&lt;=$I&gt;&gt;&quot;&gt;
@@ -1053,18 +1031,51 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
   &lt;input type=&quot;hidden&quot; name=&quot;L&quot; value=&quot;&lt;&lt;=$L&gt;&gt;&quot;&gt;
 &lt;/form&gt;
 
+&lt;!-- 製作長條圖 --&gt;
 &lt;script&gt;
-document.querySelector(&quot;.bsti-nextbtn&quot;).addEventListener(&quot;click&quot;, function () {
-  const form = document.getElementById(&quot;hiddenForm&quot;);
-  const data = new FormData(form);
+(function () {
+  function getBarHTML(leftLabel, rightLabel, leftScore, rightScore) {
+    const total = leftScore + rightScore;
+    const ratio = total &gt; 0 ? leftScore / total : 0.5;
+    const pctL = Math.round(ratio * 100);
+    const pctR = 100 - pctL;
+    const barPct = (0.12 + ratio * 0.76) * 100;
+    return `&lt;div class=&quot;bsti-bar-row&quot;&gt;
+      &lt;div class=&quot;bsti-bar-label&quot;&gt;${leftLabel}&lt;span class=&quot;bsti-bar-pct-left&quot;&gt;${pctL}%&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;bsti-bar-track&quot;&gt;
+        &lt;div class=&quot;bsti-bar-inner&quot; style=&quot;width:${barPct}%&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;bsti-bar-labelR&quot;&gt;&lt;span class=&quot;bsti-bar-pct-right&quot;&gt;${pctR}%&lt;/span&gt;${rightLabel}&lt;/div&gt;
+    &lt;/div&gt;`;
+  }
+
+  const v = State.variables;
+  const html = 
+    getBarHTML(&#39;內耗(I)&#39;, &#39;外耗(E)&#39;, v.I, v.E) +
+    getBarHTML(&#39;焦慮(A)&#39;, &#39;冷漠(D)&#39;, v.A, v.D) +
+    getBarHTML(&#39;逞強(O)&#39;, &#39;逃避(W)&#39;, v.O, v.W) +
+    getBarHTML(&#39;自大(G)&#39;, &#39;自卑(L)&#39;, v.G, v.L);
+
+  document.getElementById(&quot;bsti-bars&quot;).innerHTML = html;
+})();
+&lt;/script&gt;
+
+&lt;!-- JS送出表單後跳轉 --&gt;
+&lt;script&gt;
+function sendFormspree() {
+  const form = document.getElementById(&quot;formspreeForm&quot;);
+
   fetch(form.action, {
     method: &quot;POST&quot;,
-    body: data,
+    body: new FormData(form),
     headers: {
       &#39;Accept&#39;: &#39;application/json&#39;
     }
+  }).finally(() =&gt; {
+    // 無論成功或失敗都跳轉
+    Engine.play(State.getVar(&#39;$code&#39;));
   });
-});
+}
 &lt;/script&gt;
 </tw-passagedata><tw-passagedata pid="36" name="EAWG" tags="" position="1325,1150" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
   &lt;!-- 頂部 ICON+標題 --&gt;
