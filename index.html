@@ -1008,18 +1008,7 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
 
   &lt;div class=&quot;bsti-code&quot;&gt;&lt;&lt;=$code&gt;&gt;&lt;/div&gt;
 
-  &lt;input type=&quot;email&quot; name=&quot;email&quot; form=&quot;resultForm&quot; placeholder=&quot;輸入 Email（可選填）&quot; 
-    style=&quot;margin-top:1.4em;padding:0.7em 1em;width:90%;border-radius:1em;border:1px solid #ccc;font-size:1em;&quot;&gt;
-
-  &lt;div style=&quot;margin-top:1.5em;font-size:0.99em;color:#b0986a;&quot;&gt;
-    點下方按鈕，解鎖你的專屬陰影人格
-  &lt;/div&gt;
-
-  &lt;&lt;button &quot;查看專屬陰影人格&quot; class=&quot;bsti-nextbtn&quot;&gt;&gt;
-    &lt;&lt;run document.getElementById(&quot;form-code&quot;).value = $code&gt;&gt;
-    &lt;&lt;run document.getElementById(&quot;resultForm&quot;).submit()&gt;&gt;
-    &lt;&lt;goto $code&gt;&gt;
-  &lt;&lt;/button&gt;&gt;
+  &lt;button id=&quot;submitBtn&quot; class=&quot;bsti-nextbtn&quot;&gt;查看專屬陰影人格&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;!-- Formspree 表單區 --&gt;
@@ -1060,6 +1049,31 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
     getBarHTML(&#39;自大(G)&#39;, &#39;自卑(L)&#39;, State.variables.G, State.variables.L);
 
   document.getElementById(&#39;bsti-bars&#39;).innerHTML = html;
+
+  document.getElementById(&quot;submitBtn&quot;).addEventListener(&quot;click&quot;, function() {
+    document.getElementById(&quot;form-code&quot;).value = &quot;&lt;&lt;=$code&gt;&gt;&quot;;
+
+    var form = document.getElementById(&quot;resultForm&quot;);
+    var formData = new FormData(form);
+
+    fetch(form.action, {
+      method: &quot;POST&quot;,
+      body: formData,
+      headers: {
+        &#39;Accept&#39;: &#39;application/json&#39;
+      }
+    }).then(response =&gt; {
+      if (response.ok) {
+        // 送出成功，跳轉到結果頁面（$code）
+        window.location.href = &quot;&lt;&lt;=$code&gt;&gt;&quot;;
+      } else {
+        alert(&quot;提交失敗，請稍後再試&quot;);
+      }
+    }).catch(() =&gt; {
+      alert(&quot;提交出錯，請檢查網路&quot;);
+    });
+  });
+
 })();
 &lt;/script&gt;
 </tw-passagedata><tw-passagedata pid="36" name="EAWG" tags="" position="1325,1150" size="100,100">&lt;div class=&quot;twee-character&quot;&gt;
