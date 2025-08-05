@@ -1011,8 +1011,7 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
   &lt;button id=&quot;submitBtn&quot; class=&quot;bsti-nextbtn&quot;&gt;查看專屬陰影人格&lt;/button&gt;
 &lt;/div&gt;
 
-&lt;!-- Formspree 表單區 --&gt;
-&lt;form id=&quot;resultForm&quot; action=&quot;https://formspree.io/f/xzzvpwdk&quot; method=&quot;POST&quot; style=&quot;display: none;&quot;&gt;
+&lt;form id=&quot;resultForm&quot; action=&quot;https://formspree.io/f/xzzvpwdk&quot; method=&quot;POST&quot; style=&quot;display:none;&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;&lt;&lt;=$name&gt;&gt;&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;code&quot; id=&quot;form-code&quot; value=&quot;&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;i&quot; value=&quot;&lt;&lt;=State.variables.I&gt;&gt;&quot;&gt;
@@ -1051,7 +1050,7 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
   document.getElementById(&#39;bsti-bars&#39;).innerHTML = html;
 
   document.getElementById(&quot;submitBtn&quot;).addEventListener(&quot;click&quot;, function() {
-    document.getElementById(&quot;form-code&quot;).value = &quot;&lt;&lt;=$code&gt;&gt;&quot;;
+    document.getElementById(&quot;form-code&quot;).value = $code;
 
     var form = document.getElementById(&quot;resultForm&quot;);
     var formData = new FormData(form);
@@ -1064,8 +1063,8 @@ window.Engine = SugarCube.Engine;</script><tw-passagedata pid="1" name="1" tags=
       }
     }).then(response =&gt; {
       if (response.ok) {
-        // 成功送出表單後，用 SugarCube 跳轉 Passage
-        SugarCube.Engine.play(&quot;&lt;&lt;=$code&gt;&gt;&quot;);
+        // 成功送出表單後，跳轉到該陰影人格代碼對應的 Passage
+        SugarCube.Engine.play($code);
       } else {
         alert(&quot;提交失敗，請稍後再試&quot;);
       }
